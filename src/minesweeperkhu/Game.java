@@ -39,6 +39,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         gui.setVisible(true);
         gui.setIcons();
         gui.resetButton();
+        minesweeperCore.printBoard();
     }
 
     private void endGame() {
@@ -211,8 +212,8 @@ public class Game implements MouseListener, ActionListener, WindowListener {
 
     private void showAll() {
         JButton buttons[][] = gui.getButtons();
-        for (int x = 0; x < minesweeperCore.getWidth(); x++) {
-            for (int y = 0; y < minesweeperCore.getHeight(); y++) {
+        for (int x = 0; x < minesweeperCore.width; x++) {
+            for (int y = 0; y < minesweeperCore.height; y++) {
                 int cellSolution = minesweeperCore.getCellValue(x, y);
                 if (!minesweeperCore.isVisible(x, y)) {
                     buttons[x][y].setIcon(null);
