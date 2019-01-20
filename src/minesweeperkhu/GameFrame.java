@@ -46,7 +46,7 @@ public class GameFrame extends JFrame {
         timeLeftPanel = new JPanel();
         minesCountPanel = new JPanel();
         newGame = new JMenuItem("New Game");
-        buttons = new JButton[rows+10][columns+10];
+        buttons = new JButton[columns][rows];
         mineIconLabel = new JLabel("", SwingConstants.CENTER);
         clockIconLabel = new JLabel("", SwingConstants.CENTER);
         timeLeftLabel = new JLabel("0", SwingConstants.CENTER);
@@ -55,7 +55,7 @@ public class GameFrame extends JFrame {
         
         setTitle("Mine Sweeper");
         windows_width = MinesweeperCore.width * 70;
-        windows_height = MinesweeperCore.height * 70;
+        windows_height = MinesweeperCore.height * 50 + 100;
         setSize(windows_width, windows_height);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/mine.png")));
     }
