@@ -66,7 +66,7 @@ public class MinesweeperCore implements IMinesweeperCore {
         }
     }
 
-    private void setBomb(int x, int y) {
+    private void setNumbers(int x, int y) {
         if (x > 0 && board[y][x - 1] != -1) {
             board[y][x - 1]++;
         }
@@ -102,7 +102,7 @@ public class MinesweeperCore implements IMinesweeperCore {
             if (board[y][x] != -1) {
                 //visable[y][x] = true;
                 board[y][x] = -1;
-                setBomb(x, y);
+                setNumbers(x, y);
             } else {
                 i--;
             }
@@ -152,7 +152,7 @@ public class MinesweeperCore implements IMinesweeperCore {
     }
 
     @Override
-    public void updateBoard(int y, int x) {
+    public void updateBoard(int x, int y) {
         if (board[y][x] == -1) {
             if (calculateVisible() < 2) {
                 initBoard();
@@ -168,9 +168,9 @@ public class MinesweeperCore implements IMinesweeperCore {
 
     private int calculateVisible() {
         int result = 0;
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (visable[j][i]) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (visable[i][j]) {
                     result++;
                 }
             }
@@ -202,27 +202,27 @@ public class MinesweeperCore implements IMinesweeperCore {
 
     @Override
     public boolean isMine(int x, int y) {
-        return board[x][y] == -1;
+        return board[y][x] == -1;
     }
 
     @Override
     public int getCellValue(int x, int y) {
-        return board[x][y];
+        return board[y][x];
     }
 
     @Override
     public void setFlag(int x, int y) {
-        flag[x][y] = !flag[x][y];
+        flag[y][x] = !flag[y][x];
     }
 
     @Override
     public boolean isFlag(int x, int y) {
-        return flag[x][y];
+        return flag[y][x];
     }
 
     @Override
     public boolean isVisible(int x, int y) {
-        return visable[x][y];
+        return visable[y][x];
     }
 
     @Override
