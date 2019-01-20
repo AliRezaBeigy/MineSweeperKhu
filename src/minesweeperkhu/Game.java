@@ -18,9 +18,11 @@ public class Game implements MouseListener, ActionListener, WindowListener {
     private final MinesweeperCore minesweeperCore;
     public static boolean playing;
     private final GameFrame gui;
+    /*
     private final int width = 10;
     private final int height = 10;
     private final int mineCount = 10;
+    */
 
     public Game() {
         /*
@@ -28,9 +30,10 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         minesweeperCore.setHeight(height);
         minesweeperCore.setMineCount(mineCount);
         */
+        MinesweeperCore.state = Status.GAME;
         minesweeperCore = new MinesweeperCore();
         minesweeperCore.setBoard();
-        gui = new GameFrame(minesweeperCore.getHeight(), minesweeperCore.getWidth(), minesweeperCore.getMineCount());
+        gui = new GameFrame();
         gui.setButtonListeners(this);
         playing = false;
         gui.setVisible(true);
