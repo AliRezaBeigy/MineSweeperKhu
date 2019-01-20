@@ -16,17 +16,19 @@ import javax.swing.border.TitledBorder;
 public class Game implements MouseListener, ActionListener, WindowListener {
 
     private final MinesweeperCore minesweeperCore;
-    private boolean playing;
+    public static boolean playing;
     private final GameFrame gui;
-    private final int width = 20;
-    private final int height = 20;
-    private final int mineCount = 50;
+    private final int width = 10;
+    private final int height = 10;
+    private final int mineCount = 10;
 
     public Game() {
-        minesweeperCore = new MinesweeperCore();
+        /*
         minesweeperCore.setWidth(width);
         minesweeperCore.setHeight(height);
         minesweeperCore.setMineCount(mineCount);
+        */
+        minesweeperCore = new MinesweeperCore();
         minesweeperCore.setBoard();
         gui = new GameFrame(minesweeperCore.getHeight(), minesweeperCore.getWidth(), minesweeperCore.getMineCount());
         gui.setButtonListeners(this);
@@ -296,7 +298,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
                 if (minesweeperCore.isFlag(x, y)) {
                     return;
                 }
-            } else if (SwingUtilities.isRightMouseButton(e) && (minesweeperCore.isMine(x, y) || !minesweeperCore.isVisible(x, y))) {
+            } else if (SwingUtilities.isRightMouseButton(e) && !minesweeperCore.isVisible(x, y)) {
                 if (minesweeperCore.isFlag(x, y)) {
                     button.setText("");
                     button.setBackground(new Color(0, 110, 140));

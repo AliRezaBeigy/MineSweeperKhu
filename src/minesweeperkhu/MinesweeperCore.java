@@ -21,6 +21,7 @@ public class MinesweeperCore implements IMinesweeperCore {
         board = new int[width][height];
         flag = new boolean[width][height];
         visable = new boolean[width][height];
+        state = Status.GAME;
     }
 
     @Override
@@ -74,7 +75,6 @@ public class MinesweeperCore implements IMinesweeperCore {
         if (y < height - 1 && board[y + 1][x] != -1) {
             board[y + 1][x]++;
         }
-        //tarkibi
         if (x > 0 && y > 0 && board[y - 1][x - 1] != -1) {
             board[y - 1][x - 1]++;
         }
@@ -96,7 +96,7 @@ public class MinesweeperCore implements IMinesweeperCore {
             int index = bombindex.nextInt(height * width);
             int x = index % width, y = index / width;
             if (board[y][x] != -1) {
-                visable[y][x] = true;
+                //visable[y][x] = true;
                 board[y][x] = -1;
                 setBomb(x, y);
             } else {
@@ -171,7 +171,7 @@ public class MinesweeperCore implements IMinesweeperCore {
                 }
             }
         }
-        return result - mines;
+        return result;
     }
 
     @Override
