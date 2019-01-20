@@ -15,7 +15,11 @@ public class MinesweeperCore implements IMinesweeperCore {
     static int[][] board = new int[35][35];
     static boolean[][] visable = new boolean[35][35];
     static boolean[][] flag = new boolean[35][35];
-    static String playerName = "player1";
+    static String playerName = "";
+    
+    public MinesweeperCore(){
+        cleanBoard();
+    }
 
     private void initBoard() {
         board = new int[width][height];
