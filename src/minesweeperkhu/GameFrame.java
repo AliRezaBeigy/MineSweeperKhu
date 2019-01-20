@@ -6,8 +6,8 @@ import javax.swing.border.EtchedBorder;
 
 public class GameFrame extends JFrame {
 
-    private final int windows_width = 1040;
-    private final int windows_height = 1000;
+    private int windows_width;
+    private int windows_height;
 
     private Icon mine;
     private Icon flag;
@@ -46,7 +46,7 @@ public class GameFrame extends JFrame {
         timeLeftPanel = new JPanel();
         minesCountPanel = new JPanel();
         newGame = new JMenuItem("New Game");
-        buttons = new JButton[rows][columns];
+        buttons = new JButton[columns][rows];
         mineIconLabel = new JLabel("", SwingConstants.CENTER);
         clockIconLabel = new JLabel("", SwingConstants.CENTER);
         timeLeftLabel = new JLabel("0", SwingConstants.CENTER);
@@ -54,17 +54,18 @@ public class GameFrame extends JFrame {
         background = new JLabel(new ImageIcon(getClass().getResource("/resources/background.jpg")));
         
         setTitle("Mine Sweeper");
+        windows_width = MinesweeperCore.width * 70;
+        windows_height = MinesweeperCore.height * 50 + 100;
         setSize(windows_width, windows_height);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/mine.png")));
     }
     
-    public GameFrame(int r, int c, int m) {
-        rows = r;
-        mines = m;
-        columns = c;
+    public GameFrame() {
+        rows = MinesweeperCore.height;
+        mines = MinesweeperCore.mines;
+        columns = MinesweeperCore.width;
         timeLeft = 0;
         timerStop = true;
-        
         InitializeForm();
         
         mineBoard.setLayout(new GridLayout(rows, columns, 0, 0));
@@ -94,7 +95,7 @@ public class GameFrame extends JFrame {
         minesCountLabel.setBackground(new Color(204, 223, 255));
         minesCountLabel.setForeground(Color.BLACK);
         minesCountLabel.setOpaque(true);
-        minesCountLabel.setText(Integer.toString(m));
+        minesCountLabel.setText(Integer.toString(mines));
         mineIconLabel.setIcon(new ImageIcon(getClass().getResource("/resources/mine.png")));
         minesCountPanel.setLayout(new BorderLayout(5, 0));
         minesCountPanel.add(minesCountLabel, BorderLayout.CENTER);
