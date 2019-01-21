@@ -187,6 +187,7 @@ public class MinesweeperCore implements IMinesweeperCore {
                 }
             }
         }
+        state = Status.WIN;
         return true;
     }
 
