@@ -22,9 +22,9 @@ public class MinesweeperCore implements IMinesweeperCore {
     }
 
     private void initBoard() {
-        board = new int[width][height];
-        flag = new boolean[width][height];
-        visable = new boolean[width][height];
+        board = new int[height][width];
+        flag = new boolean[height][width];
+        visable = new boolean[height][width];
         state = Status.GAME;
     }
 
