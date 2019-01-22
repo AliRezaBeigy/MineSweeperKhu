@@ -32,8 +32,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         */
         MinesweeperCore.state = Status.GAME;
         if (GamePanel.isLoad){
-            minesweeperCore = new MinesweeperCore();//ReadPlayerObject(MinesweeperCore.playerName);
-            System.out.printf("in khat bala\n");
+            minesweeperCore = Print.ReadPlayerObject("Player1");
         }else{
             minesweeperCore = new MinesweeperCore();
         }
@@ -113,9 +112,15 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JPanel statistics = new JPanel();
         statistics.setLayout(new GridLayout(5, 1, 0, 10));
         JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimeLeft()) + " seconds");
-        JLabel bestTime = new JLabel();
+        JLabel TotalGames = new JLabel("  Total games = " + Print.getTotalGames());
+        JLabel Wins = new JLabel("  Wins = " + Print.getWins());
+        JLabel Losses = new JLabel("  Losses = " + Print.getLosses());
+        JLabel JplayerName = new JLabel("  Player name = " + MinesweeperCore.playerName);
+        statistics.add(JplayerName);
         statistics.add(time);
-        statistics.add(bestTime);
+        statistics.add(TotalGames);
+        statistics.add(Wins);
+        statistics.add(Losses);
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         statistics.setBorder(loweredetched);
         JPanel buttons = new JPanel();
