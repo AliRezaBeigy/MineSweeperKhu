@@ -8,7 +8,6 @@ package minesweeperkhu;
 public interface IMinesweeperCore {
     public void setBoard();
     public void cleanBoard();
-    public void printBoard();
     public void setWidth(int width);
     public void setHeight(int height);
     public void setFlag(int x, int y);
