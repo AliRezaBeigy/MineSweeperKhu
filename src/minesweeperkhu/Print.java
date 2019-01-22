@@ -2,6 +2,7 @@ package minesweeperkhu;
 
 import java.io.* ;
 import java.util.Date;
+import static minesweeperkhu.MinesweeperCore.height;
 
 public class Print extends MinesweeperCore {
     
@@ -10,52 +11,50 @@ public class Print extends MinesweeperCore {
     static int Wins ;
     static int Losses ;
     static File file = new File(playerName + "_game_log.txt");
-    static File InCompleteFile = new File("incomplete_game_log.txt");
+    static File InCompleteFile = new File("_incomplete_game_log.txt");
     static String time ;
     static String SaveGame ;
     static String previousSave = "" ;
     static String SaveForPrint = "" ;
     
-    static void printInFile(){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter( file , false))){
-            
-            writer.write(SaveGame + str + previousSave);
-        } 
-        catch (IOException ex) {
-        }
-    }
-    
-    static void printResultInFile(Status state , GameFrame gui){
+    //Called In End of Each Game
+    static void printResultInFile(Status state , GameFrame gui){    
         SetTime(gui.getTimeLeft());
         ReadSaveFile();
-        SetSaveGame();
-        
+        SetSaveGame();      
         if(state == Status.WIN){
-            printWinInFile();
+            str += "\n" + playerName + " is Win ..." ;
+            //for summary
+            printResultInFile2();
             Wins ++ ;
         }
         else if (state == Status.LOSE){
-            printLostInFile();
+            str += "\n" + playerName + " is Lost ...";
+            printResultInFile2();
             Losses ++ ;
         }
-        TotalGames ++ ;
-        
+        TotalGames ++ ;       
         SetSaveGame();
         printInFile();
         SaveForPrint = str + SaveForPrint ;
         str = "" ;
         previousSave = "" ;
     }
-
+    
+    static void printInFile(){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter( file , false))){         
+            writer.write(SaveGame + str + previousSave);
+        } 
+        catch (IOException ex) {
+        }
+    }
+    
     static void printResult(){      
         System.out.print(SaveGame + SaveForPrint);
     }
     
-    static void printWinInFile () {
-
-        str += "\n" + playerName + " is Win ..." ;
-        str += "\r\n\n" ;                                  // Empty Line
-        
+    static void printResultInFile2 () {
+        str += "\r\n\n" ;
         for(int Line = 3 ; Line < height*2 + 4 ; Line++){
             printBoardInFile(Line) ;
             str += "\r\n" ;                                // Next Line
@@ -68,25 +67,7 @@ public class Print extends MinesweeperCore {
         str += SeparatorLine() ;
         str += "\r\n\n" ;                                 // Empty Line
     }
-    
-    static void printLostInFile (){
 
-        str += "\n" + playerName + " is Lost ...";
-        str += "\r\n\n" ;                                 // Empty Line
-        
-        for(int Line = 3 ; Line < height*2 + 4 ; Line++){
-            printBoardInFile(Line) ;
-            str += "\r\n" ;                               // Next Line
-        }
-        str += "\r\n\n" ;
-        str += "Boombs = " + mines + "     |     " ;
-        str += "Time = " + time + "     |     " ;
-        str += "End on Date = " + new Date(System.currentTimeMillis()) ;
-        str += "\r\n" ;
-        str += SeparatorLine() ;
-        str += "\r\n\n" ;
-    }
-    
     static void printBoardInFile(int Line){
         for(int Column = 1 ; Column < width*6 + 2 ; Column++){
             if(Line%2 == 1) str += "~" ;
@@ -112,17 +93,20 @@ public class Print extends MinesweeperCore {
         return separatorLine ;
     }
    
-    static void ReadSaveFile(){  
+    static void ReadSaveFile(){ 
         
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))){ 
             
+            // Frst Line
             reader.readLine();
+            // Second Line
             String [] sa = reader.readLine().split(" ");
             
             TotalGames = Integer.parseInt(sa[3]) ;
             Wins= Integer.parseInt(sa[15]) ;
             Losses = Integer.parseInt(sa[27]) ;
             
+            // Cross 2 Lines
             reader.readLine();
             reader.readLine();
             
@@ -161,29 +145,27 @@ public class Print extends MinesweeperCore {
         SaveGame += "\n" + SeparatorLine() + "\n" + SeparatorLine() + "\n\n" ;
     }
     
-    static void WriteObject (MinesweeperCore minsweeperCore) {
-        try(ObjectOutputStream write_Obj = new ObjectOutputStream(new FileOutputStream( InCompleteFile , false))){
-            
+    static void WritePlayerObject (MinesweeperCore minsweeperCore) {
+        try(ObjectOutputStream write_Obj = new ObjectOutputStream(new FileOutputStream( InCompleteFile , true))){           
             write_Obj.writeObject(minsweeperCore);
         } 
         catch (IOException ex) {
         }
     }
     
-    static MinesweeperCore ReadObject (){
+    static MinesweeperCore ReadPlayerObject (String playerName){
         MinesweeperCore minesweeperCore = new MinesweeperCore();
         try(ObjectInputStream read_Obj = new ObjectInputStream(new FileInputStream(InCompleteFile))){
-            minesweeperCore = (MinesweeperCore)read_Obj.readObject() ;
+            while(true){
+                MinesweeperCore minesweeperCore2 = (MinesweeperCore)read_Obj.readObject() ; 
+                if (minesweeperCore2.playerName.equalsIgnoreCase(playerName)){
+                    minesweeperCore = minesweeperCore2 ;
+                }
+            }
         }
         catch (IOException | ClassNotFoundException ex){         
         }
-        
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter( InCompleteFile , false))){           
-            writer.write("");
-        } 
-        catch (IOException ex) {
-        }
-        
+ 
         return minesweeperCore ;
     }
 }
