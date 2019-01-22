@@ -109,16 +109,6 @@ public class MinesweeperCore implements IMinesweeperCore {
         }
     }
 
-    @Override
-    public void printBoard() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.printf("%d", board[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
     private void dfs(int x, int y) {
         if (board[y][x] != -1) {
             visable[y][x] = true;
