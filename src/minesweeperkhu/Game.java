@@ -39,10 +39,10 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         gui.setVisible(true);
         gui.setIcons();
         gui.resetButton();
-        minesweeperCore.printBoard();
     }
 
     private void endGame() {
+        Print.printResultInFile(minesweeperCore.getStatus(), gui);
         playing = false;
         showAll();
     }
@@ -67,6 +67,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JButton playAgain = new JButton("Play Again");
         exit.addActionListener((ActionEvent e) -> {
             dialog.dispose();
+            Print.printResult();
             System.exit(0);
         });
         playAgain.addActionListener((ActionEvent e) -> {
@@ -118,6 +119,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JButton playAgain = new JButton("Play Again");
         exit.addActionListener((ActionEvent e) -> {
             dialog.dispose();
+            Print.printResult();
             System.exit(0);
         });
         playAgain.addActionListener((ActionEvent e) -> {
