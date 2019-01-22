@@ -1,5 +1,6 @@
 package minesweeperkhu;
 
+import java.awt.Color;
 
 public class GamePanel extends javax.swing.JFrame {
 
@@ -33,6 +34,7 @@ public class GamePanel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +119,10 @@ public class GamePanel extends javax.swing.JFrame {
                 .addGap(154, 154, 154)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +150,9 @@ public class GamePanel extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -170,13 +178,30 @@ public class GamePanel extends javax.swing.JFrame {
         jSpinner1.setValue(Integer.valueOf(25));
         jSpinner2.setValue(Integer.valueOf(16));
         jSpinner3.setValue(Integer.valueOf(100));
-    }                                        
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         MinesweeperCore.width = (int) jSpinner1.getValue();
         MinesweeperCore.height = (int) jSpinner2.getValue();
         MinesweeperCore.mines = (int) jSpinner3.getValue();
         MinesweeperCore.playerName = jTextField1.getText();
+        jLabel6.setForeground(Color.red);
+        if (MinesweeperCore.width < 1 || MinesweeperCore.width > 30){
+            jLabel6.setText("Invalid width number please try again (1 - 30)");
+            return;
+        }
+        if (MinesweeperCore.height < 1 || MinesweeperCore.height > 20){
+            jLabel6.setText("Invalid height number please try again (1 - 20)");
+            return;
+        }
+        if (MinesweeperCore.mines < 1){
+            jLabel6.setText("Invalid mine number please try again");
+            return;
+        }
+        if (MinesweeperCore.mines > MinesweeperCore.width*MinesweeperCore.height/3){
+            jLabel6.setText("Too much mines!!!");
+            return;
+        }
         MinesweeperCore.state = Status.GAME;
         new Game();
         this.setVisible(false);
@@ -223,6 +248,7 @@ public class GamePanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
