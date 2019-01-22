@@ -31,7 +31,12 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         minesweeperCore.setMineCount(mineCount);
         */
         MinesweeperCore.state = Status.GAME;
-        minesweeperCore = new MinesweeperCore();
+        if (GamePanel.isLoad){
+            minesweeperCore = new MinesweeperCore();//ReadPlayerObject(MinesweeperCore.playerName);
+            System.out.printf("in khat bala\n");
+        }else{
+            minesweeperCore = new MinesweeperCore();
+        }
         minesweeperCore.setBoard();
         gui = new GameFrame();
         gui.setButtonListeners(this);
