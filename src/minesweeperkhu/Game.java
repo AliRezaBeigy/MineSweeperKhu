@@ -15,38 +15,24 @@ import javax.swing.border.TitledBorder;
 
 public class Game implements MouseListener, ActionListener, WindowListener {
 
-    private final MinesweeperCore minesweeperCore;
+    private MinesweeperCore minesweeperCore;
     public static boolean playing;
     private final GameFrame gui;
-    /*
-    private final int width = 10;
-    private final int height = 10;
-    private final int mineCount = 10;
-    */
 
-    public Game() {
-        /*
-        minesweeperCore.setWidth(width);
-        minesweeperCore.setHeight(height);
-        minesweeperCore.setMineCount(mineCount);
-        */
-        MinesweeperCore.state = Status.GAME;
-        if (GamePanel.isLoad){
-            minesweeperCore = Print.ReadPlayerObject("Player1");
-        }else{
-            minesweeperCore = new MinesweeperCore();
-        }
-        minesweeperCore.setBoard();
-        gui = new GameFrame();
+    public Game(MinesweeperCore minesweeperCore) {
+        this.minesweeperCore = minesweeperCore;
+        minesweeperCore.state = Status.GAME;
+        gui = new GameFrame(minesweeperCore);
         gui.setButtonListeners(this);
         playing = false;
         gui.setVisible(true);
         gui.setIcons();
         gui.resetButton();
+        updateUIBoard();
     }
 
     private void endGame() {
-        Print.printResultInFile(minesweeperCore.getStatus(), gui);
+        minesweeperCore.printResultInFile(minesweeperCore.getStatus(), gui);
         playing = false;
         showAll();
     }
@@ -71,12 +57,14 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JButton playAgain = new JButton("Play Again");
         exit.addActionListener((ActionEvent e) -> {
             dialog.dispose();
-            Print.printResult();
+            minesweeperCore.printResult();
             System.exit(0);
         });
         playAgain.addActionListener((ActionEvent e) -> {
             dialog.dispose();
-            Game game = new Game();
+            minesweeperCore.cleanBoard();
+            minesweeperCore.setBoard();
+            Game game = new Game(minesweeperCore);
             gui.dispose();
         });
         buttons.add(exit);
@@ -93,7 +81,9 @@ public class Game implements MouseListener, ActionListener, WindowListener {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 dialog.dispose();
-            Game game = new Game();
+                minesweeperCore.cleanBoard();
+                minesweeperCore.setBoard();
+                Game game = new Game(minesweeperCore);
                 gui.dispose();
             }
         });
@@ -112,10 +102,10 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JPanel statistics = new JPanel();
         statistics.setLayout(new GridLayout(5, 1, 0, 10));
         JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimeLeft()) + " seconds");
-        JLabel TotalGames = new JLabel("  Total games = " + Print.getTotalGames());
-        JLabel Wins = new JLabel("  Wins = " + Print.getWins());
-        JLabel Losses = new JLabel("  Losses = " + Print.getLosses());
-        JLabel JplayerName = new JLabel("  Player name = " + MinesweeperCore.playerName);
+        JLabel TotalGames = new JLabel("  Total games = " + minesweeperCore.getTotalGames());
+        JLabel Wins = new JLabel("  Wins = " + minesweeperCore.getWins());
+        JLabel Losses = new JLabel("  Losses = " + minesweeperCore.getLosses());
+        JLabel JplayerName = new JLabel("  Player name = " + minesweeperCore.playerName);
         statistics.add(JplayerName);
         statistics.add(time);
         statistics.add(TotalGames);
@@ -129,12 +119,14 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JButton playAgain = new JButton("Play Again");
         exit.addActionListener((ActionEvent e) -> {
             dialog.dispose();
-            Print.printResult();
+            minesweeperCore.printResult();
             System.exit(0);
         });
         playAgain.addActionListener((ActionEvent e) -> {
             dialog.dispose();
-            Game game = new Game();
+            minesweeperCore.cleanBoard();
+            minesweeperCore.setBoard();
+            Game game = new Game(minesweeperCore);
             gui.dispose();
         });
         buttons.add(exit);
@@ -151,7 +143,9 @@ public class Game implements MouseListener, ActionListener, WindowListener {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 dialog.dispose();
-            Game game = new Game();
+                minesweeperCore.cleanBoard();
+                minesweeperCore.setBoard();
+                Game game = new Game(minesweeperCore);
                 gui.dispose();
             }
         });
@@ -285,7 +279,9 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JMenuItem menuItem = (JMenuItem) e.getSource();
         switch (menuItem.getName()) {
             case "New Game":
-            Game game = new Game();
+                minesweeperCore.cleanBoard();
+                minesweeperCore.setBoard();
+                Game game = new Game(minesweeperCore);
                 gui.dispose();
                 break;
             case "Exit":
@@ -341,6 +337,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
+        minesweeperCore.WritePlayerObject();
         System.exit(0);
     }
 

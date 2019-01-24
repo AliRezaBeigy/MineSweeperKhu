@@ -6,6 +6,8 @@ import javax.swing.border.EtchedBorder;
 
 public class GameFrame extends JFrame {
 
+    MinesweeperCore minesweeperCore;
+
     private int windows_width;
     private int windows_height;
 
@@ -35,8 +37,8 @@ public class GameFrame extends JFrame {
     private Thread timer;
     private int timeLeft;
     private boolean timerStop;
-    
-    private void InitializeForm(){
+
+    private void InitializeForm() {
         mainPanel = new JPanel();
         menuBar = new JMenuBar();
         mineBoard = new JPanel();
@@ -52,22 +54,23 @@ public class GameFrame extends JFrame {
         timeLeftLabel = new JLabel("0", SwingConstants.CENTER);
         minesCountLabel = new JLabel("0", SwingConstants.CENTER);
         background = new JLabel(new ImageIcon(getClass().getResource("/resources/background.jpg")));
-        
+
         setTitle("Mine Sweeper");
-        windows_width = MinesweeperCore.width * 70;
-        windows_height = MinesweeperCore.height * 50 + 100;
+        windows_width = minesweeperCore.width * 50;
+        windows_height = minesweeperCore.height * 50 + 100;
         setSize(windows_width, windows_height);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/mine.png")));
     }
-    
-    public GameFrame() {
-        rows = MinesweeperCore.height;
-        mines = MinesweeperCore.mines;
-        columns = MinesweeperCore.width;
+
+    public GameFrame(MinesweeperCore minesweeperCore) {
+        this.minesweeperCore = minesweeperCore;
+        rows = minesweeperCore.height;
+        mines = minesweeperCore.mines;
+        columns = minesweeperCore.width;
         timeLeft = 0;
         timerStop = true;
         InitializeForm();
-        
+
         mineBoard.setLayout(new GridLayout(rows, columns, 0, 0));
         for (int y = 0; y < rows; y++) {
             for (int x = 0; x < columns; x++) {
@@ -89,7 +92,7 @@ public class GameFrame extends JFrame {
         timeLeftPanel.add(clockIconLabel, BorderLayout.WEST);
         timeLeftPanel.add(timeLeftLabel, BorderLayout.CENTER);
         timeLeftPanel.setOpaque(false);
-        
+
         minesCountLabel.setFont(new Font("Serif", Font.BOLD, 20));
         minesCountLabel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         minesCountLabel.setBackground(new Color(204, 223, 255));
@@ -115,11 +118,11 @@ public class GameFrame extends JFrame {
 
         exit.setName("Exit");
         newGame.setName("New Game");
-        
+
         gameMenu.add(newGame);
         gameMenu.add(exit);
         menuBar.add(gameMenu);
-        
+
         setLayout(new BorderLayout());
         background.setLayout(new BorderLayout(0, 0));
         background.add(menuBar, BorderLayout.NORTH);

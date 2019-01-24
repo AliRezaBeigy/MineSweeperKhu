@@ -5,20 +5,23 @@
  */
 package minesweeperkhu;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
-public class MinesweeperCore implements IMinesweeperCore {
+public class MinesweeperCore implements IMinesweeperCore, Serializable {
 
-    public static Status state = Status.STARTINGPANEL;
+    Print print;
+    String playerName = "";
+    int[][] board = new int[35][35];
+    int width = 0, height = 0, mines = 0;
+    boolean[][] flag = new boolean[35][35];
+    boolean[][] visable = new boolean[35][35];
+    public Status state = Status.STARTINGPANEL;
 
-    static int width = 0, height = 0, mines = 0;
-    static int[][] board = new int[35][35];
-    static boolean[][] visable = new boolean[35][35];
-    static boolean[][] flag = new boolean[35][35];
-    static String playerName = "";
-    
-    public MinesweeperCore(){
+    public MinesweeperCore() {
         cleanBoard();
+        print = new Print(this);
     }
 
     private void initBoard() {
@@ -30,24 +33,24 @@ public class MinesweeperCore implements IMinesweeperCore {
 
     @Override
     public void setWidth(int width) {
-        MinesweeperCore.width = width;
+        this.width = width;
         initBoard();
     }
 
     @Override
     public void setHeight(int height) {
-        MinesweeperCore.height = height;
+        this.height = height;
         initBoard();
     }
 
     @Override
     public void setPlayerName(String playerName) {
-        MinesweeperCore.playerName = playerName;
+        this.playerName = playerName;
     }
 
     @Override
     public void setMineCount(int count) {
-        MinesweeperCore.mines = count;
+        mines = count;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class MinesweeperCore implements IMinesweeperCore {
     }
 
     @Override
-    public void cleanBoard() {
+    public final void cleanBoard() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 board[i][j] = 0;
@@ -239,5 +242,33 @@ public class MinesweeperCore implements IMinesweeperCore {
     @Override
     public Status getStatus() {
         return state;
+    }
+
+    void printResultInFile(Status status, GameFrame gui) {
+        print.printResultInFile(status, gui);
+    }
+
+    void printResult() {
+        print.printResult();
+    }
+
+    int getTotalGames() {
+        return print.getTotalGames();
+    }
+
+    int getWins() {
+        return print.getWins();
+    }
+
+    int getLosses() {
+        return print.getLosses();
+    }
+
+    void WritePlayerObject() {
+        print.WritePlayerObject();
+    }
+
+    ArrayList<MinesweeperCore> ReadPlayerObject() {
+        return print.ReadPlayerObject();
     }
 }
