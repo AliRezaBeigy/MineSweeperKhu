@@ -27,12 +27,12 @@ public class Print implements Serializable {
         ReadSaveFile();
         SetSaveGame();
         if (state == Status.WIN) {
-            str += "\n" + core.playerName + " is Win ...";
+            str += "\r\n" + core.playerName + " Win ...";
             //for summary
             printResultInFile2();
             Wins++;
         } else if (state == Status.LOSE) {
-            str += "\n" + core.playerName + " is Lost ...";
+            str += "\r\n" + core.playerName + " Lost ...";
             printResultInFile2();
             Losses++;
         }
@@ -56,18 +56,18 @@ public class Print implements Serializable {
     }
 
     void printResultInFile2() {
-        str += "\r\n\n";
+        str += "\r\r\n\r\n";
         for (int Line = 3; Line < core.height * 2 + 4; Line++) {
             printBoardInFile(Line);
-            str += "\r\n";                                // Next Line
+            str += "\r\r\n";                                // Next Line
         }
-        str += "\r\n\n";
+        str += "\r\r\n\r\n";
         str += "Boombs = " + core.mines + "     |     ";
         str += "Time = " + time + "     |     ";
         str += "End on Date = " + new Date(System.currentTimeMillis());
-        str += "\r\n";
+        str += "\r\r\n";
         str += SeparatorLine();
-        str += "\r\n\n";                                 // Empty Line
+        str += "\r\r\n\r\n";                                 // Empty Line
     }
 
     void printBoardInFile(int Line) {
@@ -119,7 +119,7 @@ public class Print implements Serializable {
             String pS;
             while ((pS = reader.readLine()) != null) {
                 previousSave += pS;
-                previousSave += "\n";
+                previousSave += "\r\n";
             }
         } catch (IOException | java.lang.NumberFormatException | java.lang.NullPointerException ex) {
         }
@@ -145,11 +145,11 @@ public class Print implements Serializable {
     }
 
     void SetSaveGame() {
-        SaveGame = "Player Name = " + core.playerName + "\n";
+        SaveGame = "Player Name = " + core.playerName + "\r\n";
         SaveGame += "Total Games = " + TotalGames + "     |     ";
         SaveGame += "Wins = " + Wins + "     |     ";
         SaveGame += "Losses = " + Losses;
-        SaveGame += "\n" + SeparatorLine() + "\n" + SeparatorLine() + "\n\n";
+        SaveGame += "\r\n" + SeparatorLine() + "\r\n" + SeparatorLine() + "\r\n\r\n";
     }
 
     void WritePlayerObject() {
