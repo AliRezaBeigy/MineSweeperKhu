@@ -241,7 +241,7 @@ public class GamePanel extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
         ArrayList<MinesweeperCore> saves = minesweeperCore.ReadPlayerObject();
         JDialog dialog = new JDialog(this, Dialog.ModalityType.DOCUMENT_MODAL);
-        JLabel message = new JLabel("Chose YOur Save :", SwingConstants.CENTER);
+        JLabel message = new JLabel("Chose Your Save :", SwingConstants.CENTER);
 
         ArrayList<String> saveNames = new ArrayList<>();
         for (int i = 0; i < saves.size(); i++) {
@@ -266,10 +266,6 @@ public class GamePanel extends javax.swing.JFrame {
             } catch (IOException ex) {
                 ArrayList<MinesweeperCore> minafesweeperCore = new ArrayList<>();
             }
-            minesweeperCore.width = (int) jSpinner1.getValue();
-            minesweeperCore.height = (int) jSpinner2.getValue();
-            minesweeperCore.mines = (int) jSpinner3.getValue();
-            minesweeperCore.playerName = jTextField1.getText();
             if (minesweeperCore.width < 1 || minesweeperCore.width > 30) {
                 jLabel6.setText("Invalid width number please try again (1 - 30)");
                 return;
