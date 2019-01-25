@@ -43,12 +43,17 @@ public class Game implements MouseListener, ActionListener, WindowListener {
         JDialog dialog = new JDialog(gui, Dialog.ModalityType.DOCUMENT_MODAL);
         JLabel message = new JLabel("You won the game!", SwingConstants.CENTER);
         JPanel statistics = new JPanel();
-        statistics.setLayout(new GridLayout(6, 1, 0, 10));
-        JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimeLeft()) + " seconds"
-                + "\r\nDate:  " + new Date(System.currentTimeMillis()));
-        JLabel bestTime = new JLabel();
+        statistics.setLayout(new GridLayout(5, 1, 0, 10));
+        JLabel time = new JLabel("  Time:  " + Integer.toString(gui.getTimeLeft()) + " seconds");
+        JLabel TotalGames = new JLabel("  Total games = " + minesweeperCore.getTotalGames());
+        JLabel Wins = new JLabel("  Wins = " + minesweeperCore.getWins());
+        JLabel Losses = new JLabel("  Losses = " + minesweeperCore.getLosses());
+        JLabel JplayerName = new JLabel("  Player name = " + minesweeperCore.playerName);
+        statistics.add(JplayerName);
         statistics.add(time);
-        statistics.add(bestTime);
+        statistics.add(TotalGames);
+        statistics.add(Wins);
+        statistics.add(Losses);
         Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
         statistics.setBorder(loweredetched);
         JPanel buttons = new JPanel();
