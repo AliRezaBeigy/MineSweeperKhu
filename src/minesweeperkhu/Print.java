@@ -23,6 +23,7 @@ public class Print implements Serializable {
 
     //Called In End of Each Game
     void printResultInFile(Status state, GameFrame gui) {
+        previousSave = "";
         SetTime(gui.getTimeLeft());
         ReadSaveFile();
         SetSaveGame();
@@ -41,7 +42,6 @@ public class Print implements Serializable {
         printInFile();
         SaveForPrint = str + SaveForPrint;
         str = "";
-        previousSave = "";
     }
 
     void printInFile() {
@@ -56,18 +56,18 @@ public class Print implements Serializable {
     }
 
     void printResultInFile2() {
-        str += "\r\r\n\r\n";
+        str += "\r\n\r\n";
         for (int Line = 3; Line < core.height * 2 + 4; Line++) {
             printBoardInFile(Line);
-            str += "\r\r\n";                                // Next Line
+            str += "\r\n";                                // Next Line
         }
-        str += "\r\r\n\r\n";
+        str += "\r\n\r\n";
         str += "Boombs = " + core.mines + "     |     ";
         str += "Time = " + time + "     |     ";
         str += "End on Date = " + new Date(System.currentTimeMillis());
-        str += "\r\r\n";
+        str += "\r\n";
         str += SeparatorLine();
-        str += "\r\r\n\r\n";                                 // Empty Line
+        str += "\r\n\r\n";                                 // Empty Line
     }
 
     void printBoardInFile(int Line) {
