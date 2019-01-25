@@ -266,6 +266,7 @@ public class Game implements MouseListener, ActionListener, WindowListener {
                     if (!minesweeperCore.isMine(x, y)) {
                         buttons[x][y].setBackground(Color.orange);
                     } else {
+                    buttons[x][y].setIcon(gui.getIconFlag());
                         buttons[x][y].setBackground(Color.green);
                     }
                     buttons[x][y].setBackground(Color.lightGray);

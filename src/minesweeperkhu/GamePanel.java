@@ -253,7 +253,7 @@ public class GamePanel extends javax.swing.JFrame {
         JScrollPane savesPanel = new JScrollPane(list);
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(1, 2, 10, 0));
-        JButton load = new JButton("Load");
+        JButton load = new JButton("Load"); 
         load.addActionListener((ActionEvent e) -> {
             dialog.dispose();
             minesweeperCore = saves.get(list.getSelectedIndex());
