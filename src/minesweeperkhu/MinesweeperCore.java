@@ -170,6 +170,17 @@ public class MinesweeperCore implements IMinesweeperCore, Serializable {
         }
         return result;
     }
+    public int calculateMines() {
+        int result = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (board[i][j] == -1 && flag[i][j] == false) {
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
 
     @Override
     public boolean checkWin() {
