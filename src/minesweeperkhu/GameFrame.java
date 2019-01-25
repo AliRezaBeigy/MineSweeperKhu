@@ -98,7 +98,7 @@ public class GameFrame extends JFrame {
         minesCountLabel.setBackground(new Color(204, 223, 255));
         minesCountLabel.setForeground(Color.BLACK);
         minesCountLabel.setOpaque(true);
-        minesCountLabel.setText(Integer.toString(mines));
+        minesCountLabel.setText(Integer.toString(minesweeperCore.calculateMines()));
         mineIconLabel.setIcon(new ImageIcon(getClass().getResource("/resources/mine.png")));
         minesCountPanel.setLayout(new BorderLayout(5, 0));
         minesCountPanel.add(minesCountLabel, BorderLayout.CENTER);
